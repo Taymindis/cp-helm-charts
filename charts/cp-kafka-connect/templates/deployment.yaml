@@ -144,3 +144,34 @@ spec:
       affinity:
 {{ toYaml .Values.affinity | indent 8 }}
       {{- end }}
+
+# For temporary file sharing
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: temp-pvc
+spec:
+  volumeName: temp-nfs-pv
+  storageClassName: ""
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+# using nfs
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: temp-nfs-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 1.2.3.4
+    path: "/mnt/nfs_share/"
+  mountOptions:
+    - nfsvers=4.2

@@ -39,8 +39,8 @@ heapOptions: "-Xms512M -Xmx512M"
 
 ## Additional env variables
 ## CUSTOM_SCRIPT_PATH is the path of the custom shell script to be ran mounted in a volume
-customEnv: {}
-  # CUSTOM_SCRIPT_PATH: /etc/scripts/create-connectors.sh
+customEnv:
+  CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components,/data/connect-jars
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -104,15 +104,15 @@ cp-schema-registry:
 ## List of volumeMounts for connect server container
 ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
 volumeMounts:
-# - name: credentials
-#   mountPath: /etc/creds-volume
+- name: kafka-connect-plugin
+  mountPath: /usr/share/confluent-hub-components
 
 ## List of volumeMounts for connect server container
 ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
 volumes:
-# - name: credentials
-#   secret:
-#     secretName: creds
+- name: kafka-connect-plugin
+  persistentVolumeClaim:
+    claimName: temp-pvc
 
 ## Secret with multiple keys to serve the purpose of multiple secrets
 ## Values for all the keys will be base64 encoded when the Secret is created or updated
