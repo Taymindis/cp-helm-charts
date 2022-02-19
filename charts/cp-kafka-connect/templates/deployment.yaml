@@ -155,7 +155,7 @@ spec:
   storageClassName: ""
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi
@@ -169,7 +169,7 @@ spec:
   capacity:
     storage: 5Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   nfs:
     server: 1.2.3.4
     path: "/mnt/nfs_share/"
