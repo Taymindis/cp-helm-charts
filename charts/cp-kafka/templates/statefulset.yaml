@@ -128,8 +128,8 @@ spec:
           value: {{ include "cp-kafka.cp-zookeeper.service-name" . | quote }}
         - name: KAFKA_LOG_DIRS
           value: {{ include "cp-kafka.log.dirs" . | quote }}
-        - name: KAFKA_METRIC_REPORTERS
-          value: "io.confluent.metrics.reporter.ConfluentMetricsReporter"
+        # - name: KAFKA_METRIC_REPORTERS
+        #   value: "io.confluent.metrics.reporter.ConfluentMetricsReporter"
         - name: CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS
           value: {{ printf "PLAINTEXT://%s:9092" (include "cp-kafka.cp-kafka-headless.fullname" .) | quote }}
         {{- range $key, $value := .Values.configurationOverrides }}
@@ -143,6 +143,10 @@ spec:
         {{- if .Values.jmx.port }}
         - name: KAFKA_JMX_PORT
           value: "{{ .Values.jmx.port }}"
+        {{- end }}
+        {{- if .Values.timezone }}
+        - name: TZ
+          value: "{{ .Values.timezone }}"
         {{- end }}
         # This is required because the Downward API does not yet support identification of
         # pod numbering in statefulsets. Thus, we are required to specify a command which

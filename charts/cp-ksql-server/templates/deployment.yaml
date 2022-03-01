@@ -90,6 +90,10 @@ spec:
           - name: KSQL_LISTENERS
             value: http://0.0.0.0:8088
           {{- end }}
+          {{- range $key, $value := .Values.customEnv }}
+          - name: {{ $key | quote }}
+            value: {{ $value | quote }}
+          {{- end }}
           {{- range $key, $value := .Values.configurationOverrides }}
           - name: {{ printf "KSQL_%s" $key | replace "." "_" | upper | quote }}
             value: {{ $value | quote }}
