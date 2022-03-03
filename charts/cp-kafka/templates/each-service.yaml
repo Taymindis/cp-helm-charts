@@ -1,17 +1,17 @@
 {{- if .Values.eachservice.enabled }}
-  {{- $fullName := include "cp-zookeeper.fullname" . }}
-  {{- $zkServers := .Values.servers | int }}
+  {{- $fullName := include "cp-kafka.fullname" . }}
+  {{- $brokers := .Values.brokers | int }}
   {{- $root := . }}
-  {{- range $i, $e := until $zkServers }}
+  {{- range $i, $e := until $brokers }}
     {{- $responsiblePod := printf "%s-%d" (printf "%s" $fullName) $i }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "cp-zookeeper.fullname" $root }}-{{ $i }}-svc
+  name: {{ template "cp-kafka.fullname" $root }}-{{ $i }}-svc
   labels:
-    app: {{ include "cp-zookeeper.name" $root }}
-    chart: {{ template "cp-zookeeper.chart" $root }}
+    app: {{ include "cp-kafka.name" $root }}
+    chart: {{ template "cp-kafka.chart" $root }}
     release: {{ $root.Release.Name }}
     heritage: {{ $root.Release.Service }}
     pod: {{ $responsiblePod }}
@@ -24,7 +24,7 @@ spec:
   {{- end }}
   clusterIP: None
   selector:
-    app: {{ include "cp-zookeeper.name" $root }}
+    app: {{ include "cp-kafka.name" $root }}
     release: {{ $root.Release.Name }}
     statefulset.kubernetes.io/pod-name: {{ $responsiblePod | quote }}
   {{- end }}

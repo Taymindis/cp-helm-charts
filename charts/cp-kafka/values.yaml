@@ -141,6 +141,14 @@ nodeport:
   servicePort: 19092
   firstListenerPort: 31090
 
+eachservice:
+  enabled: true
+  servicePorts:
+  - name: service
+    port: 19092
+  - name: jmx
+    port: 5555
+
 ## ------------------------------------------------------
 ## Zookeeper
 ## ------------------------------------------------------

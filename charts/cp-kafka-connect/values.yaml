@@ -18,7 +18,11 @@ imagePullPolicy: IfNotPresent
 ## ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
 imagePullSecrets:
 
-servicePort: 8083
+servicePorts:
+  - name: kafka-connect
+    port: 8083
+  - name: kafka-connect-jmx
+    port: 5555
 
 ## Kafka Connect properties
 ## ref: https://docs.confluent.io/current/connect/userguide.html#configuring-workers

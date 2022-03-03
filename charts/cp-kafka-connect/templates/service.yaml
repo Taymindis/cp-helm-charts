@@ -9,8 +9,11 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   ports:
-    - name: kafka-connect
-      port: {{ .Values.servicePort }}
+    {{ range $index, $element := .Values.servicePorts }}
+    - name: {{ $element.name }}
+      port: {{ $element.port }}
+      targetPort: {{$element.port}}
+    {{- end }}
     {{- if .Values.prometheus.jmx.enabled }}
     - name: metrics
       port: {{ .Values.prometheus.jmx.port }}

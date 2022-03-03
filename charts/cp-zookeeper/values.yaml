@@ -131,4 +131,8 @@ prometheus:
 
 eachservice:
   enabled: true
-  servicePort: 2181
+  servicePorts:
+  - name: service
+    port: 2181
+  - name: jmx
+    port: 5555
