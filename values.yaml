@@ -24,6 +24,11 @@ cp-zookeeper:
     # dataLogDirStorageClass: ""
   customEnv:
     TZ: Asia/Singapore
+
+  headlessExtraPort:
+    - name: jmx
+      port: 5555
+
   prometheus:
     jmx:
       enabled: false  
@@ -73,6 +78,9 @@ cp-kafka:
   #  requests:
   #   cpu: 100m
   #   memory: 128Mi
+  headlessExtraPort:
+    - name: jmx
+      port: 5555
   securityContext: 
     runAsUser: 0
 

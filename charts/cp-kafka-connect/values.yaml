@@ -83,6 +83,10 @@ affinity: {}
 jmx:
   port: 5555
 
+headlessExtraPort:
+  - name: jmx
+    port: 5555
+
 ## Prometheus Exporter Configuration
 ## ref: https://prometheus.io/docs/instrumenting/exporters/
 prometheus:
@@ -114,6 +118,11 @@ cp-schema-registry:
 volumeMounts:
 - name: kafka-connect-plugin
   mountPath: /usr/share/confluent-hub-components
+- name: tz-config
+  mountPath: /etc/localtime
+- name: tz-name
+  mountPath: /etc/timezone
+
 
 ## List of volumeMounts for connect server container
 ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
@@ -121,6 +130,16 @@ volumes:
 - name: kafka-connect-plugin
   persistentVolumeClaim:
     claimName: temp-pvc
+- name: tz-config
+  hostPath:
+    path: /usr/share/zoneinfo/Asia/Singapore
+    type: File
+- name: tz-name
+  hostPath:
+    path: /etc/timezone
+    type: File
+
+
 
 ## Secret with multiple keys to serve the purpose of multiple secrets
 ## Values for all the keys will be base64 encoded when the Secret is created or updated

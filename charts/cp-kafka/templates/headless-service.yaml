@@ -11,6 +11,7 @@ spec:
   ports:
     - port: 9092
       name: broker
+{{- toYaml .Values.headlessExtraPort | nindent 4 }}
   clusterIP: None
   selector:
     app: {{ template "cp-kafka.name" . }}

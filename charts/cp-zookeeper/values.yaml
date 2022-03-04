@@ -113,6 +113,10 @@ affinity: {}
 jmx:
   port: 5555
 
+headlessExtraPort:
+  - name: jmx
+    port: 5555
+
 ## Prometheus Exporter Configuration
 ## ref: https://prometheus.io/docs/instrumenting/exporters/
 prometheus:
